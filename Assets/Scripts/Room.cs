@@ -9,8 +9,10 @@ public class Room : MonoBehaviour {
     static private int globalID = 0;
 
     private Flood flood;
+    private float floodCounter = 0.0f;
 
     public int id;
+    public float timerToFlood = 10.0f;
 
     public RoomEmergency Status
     {
@@ -92,9 +94,25 @@ public class Room : MonoBehaviour {
         }
     }
 
-	
     void Update () 
     {   
+        switch(m_status)
+        {
+            case RoomEmergency.BROKEN:
+                floodCounter += Time.deltaTime;
+                if (floodCounter >= timerToFlood)
+                {
+                    if (!m_containsPlayer)
+                        Ship.GlobalInstance.RemoteCallRoomStateChange(RoomEmergency.FLOODING, id);
+                    else
+                        floodCounter = 0.0f;
+                }
+                break;
+
+            default:
+                floodCounter = 0.0f;
+                break;
+        }
 	}
 
     void OnMouseDown()
@@ -102,8 +120,6 @@ public class Room : MonoBehaviour {
         CrewMember crewMember = PlayerController.GlobalInstance.SelectedCrewMember;
 
         if (!PlayerController.GlobalInstance.isBusy) crewMember.SetMoving(this);
-
-        
     }
 
     void OnDrawGizmos()

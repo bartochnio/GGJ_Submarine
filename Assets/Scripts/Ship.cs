@@ -21,7 +21,7 @@ public class Ship : MonoBehaviour {
             {
                 Room r = nonEmergencyRooms[Random.Range(0, nonEmergencyRooms.Count - 1)];
 
-                Room.RoomEmergency emergency = (Room.RoomEmergency)Mathf.Clamp(Random.Range(1,3),1,2); //haxooor
+                Room.RoomEmergency emergency = Room.RoomEmergency.BROKEN;
                 RemoteCallRoomStateChange(emergency, r.id);
             }
 
