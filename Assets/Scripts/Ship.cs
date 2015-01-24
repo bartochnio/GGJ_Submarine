@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class Ship : MonoBehaviour {
 
     public List<Room> m_rooms = new List<Room>();
+    public List<Door> m_doors = new List<Door>();
 
     float eventTimer;
     public float minTimeToEmergency = 2.5f;
@@ -41,6 +42,11 @@ public class Ship : MonoBehaviour {
         networkView.RPC("RemoteChangeRoomState", RPCMode.AllBuffered, (int)state, roomID);
     }
 
+    public void RemoteCallDoorStateChange(bool state, int doorID)
+    {
+        networkView.RPC("RemoteDoorChanged", RPCMode.AllBuffered, state, doorID);
+    }
+
 	[RPC]
     void RemoteChangeRoomState(int status, int roomID) {
         Room room = m_rooms.Find(x => x.id == roomID);
@@ -54,6 +60,17 @@ public class Ship : MonoBehaviour {
         room.PumpWater();
     }
 
+    [RPC]
+    void RemoteDoorChanged(bool state, int doorID)
+    {
+        Door door = m_doors.Find(x => x.id == doorID);
+        door.Open = state;
+
+        CrewMember player = PlayerController.GlobalInstance.SelectedCrewMember;
+        if (player.Status == CrewMember.State.MOVING)
+            player.SetMoving(player.destination);
+    }
+
     public static Ship GlobalInstance
     {
         get { return FindObjectOfType<Ship>(); }
@@ -62,6 +79,7 @@ public class Ship : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         m_rooms.AddRange(GetComponentsInChildren<Room>());
+        m_doors.AddRange(GetComponentsInChildren<Door>());
 	}
 
     public void Init()

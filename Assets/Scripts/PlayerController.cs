@@ -54,30 +54,30 @@ public class PlayerController : MonoBehaviour {
 	void Update () 
     {
 
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            m_currentMember.gameObject.SetColor("Gray");
-            m_currentMember = crew[0];
-            m_currentMember.gameObject.SetColor("Red");
-        }
+        //if (Input.GetKeyDown(KeyCode.Alpha1))
+        //{
+        //    m_currentMember.gameObject.SetColor("Gray");
+        //    m_currentMember = crew[0];
+        //    m_currentMember.gameObject.SetColor("Red");
+        //}
 
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            m_currentMember.gameObject.SetColor("Gray");
-            m_currentMember = crew[1];
-            m_currentMember.gameObject.SetColor("Red");
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            m_currentMember.gameObject.SetColor("Gray");
-            m_currentMember = crew[2];
-            m_currentMember.gameObject.SetColor("Red");
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            m_currentMember.gameObject.SetColor("Gray");
-            m_currentMember = crew[3];
-            m_currentMember.gameObject.SetColor("Red");
-        }
+        //if (Input.GetKeyDown(KeyCode.Alpha2))
+        //{
+        //    m_currentMember.gameObject.SetColor("Gray");
+        //    m_currentMember = crew[1];
+        //    m_currentMember.gameObject.SetColor("Red");
+        //}
+        //if (Input.GetKeyDown(KeyCode.Alpha3))
+        //{
+        //    m_currentMember.gameObject.SetColor("Gray");
+        //    m_currentMember = crew[2];
+        //    m_currentMember.gameObject.SetColor("Red");
+        //}
+        //if (Input.GetKeyDown(KeyCode.Alpha4))
+        //{
+        //    m_currentMember.gameObject.SetColor("Gray");
+        //    m_currentMember = crew[3];
+        //    m_currentMember.gameObject.SetColor("Red");
+        //}
 	}
 }

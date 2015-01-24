@@ -34,7 +34,8 @@ public static class PathFinder
                 foundPath = true;
             }
 
-            foreach(Room r in curNode.room.m_neighbours)
+            List<Room> neighbours = curNode.room.GetOpenNeighbours();
+            foreach(Room r in curNode.room.GetOpenNeighbours())
             {
                 if (!visited.Contains(r))
                 {

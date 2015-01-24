@@ -50,14 +50,43 @@ public class Room : MonoBehaviour {
     {
         List<Room> result = new List<Room>();
 
-        if (top != null && top.open)
+        if (top != null && top.Open)
         {
             Room r = top.GetOther(this);
-            if (r.IsRoomAvailable())
-                result.Add(r);
+            result.Add(r);
+        }
+
+        if (bottom != null && bottom.Open)
+        {
+            Room r = bottom.GetOther(this);
+            result.Add(r);
+        }
+
+        if (left != null && left.Open)
+        {
+            Room r = left.GetOther(this);
+            result.Add(r);
+        }
+
+        if (right != null && right.Open)
+        {
+            Room r = right.GetOther(this);
+            result.Add(r);
         }
 
         return result;
+    }
+
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.black;
+        if (bottom != null)Gizmos.DrawLine(transform.position, bottom.transform.position);
+        Gizmos.color = Color.red;
+        if (top != null) Gizmos.DrawLine(transform.position, top.transform.position);
+        Gizmos.color = Color.green;
+        if (left != null) Gizmos.DrawLine(transform.position, left.transform.position);
+        Gizmos.color = Color.cyan;
+        if (right != null) Gizmos.DrawLine(transform.position, right.transform.position);
     }
 
     public enum RoomEmergency
@@ -77,11 +106,6 @@ public class Room : MonoBehaviour {
         PING,
         TURRET,
         EMPTY
-    }
-
-    bool IsRoomAvailable()
-    {
-        return m_status != RoomEmergency.DESTRoYED;
     }
 
 	void Start () 
@@ -153,9 +177,9 @@ public class Room : MonoBehaviour {
         if (!PlayerController.GlobalInstance.isBusy) crewMember.SetMoving(this);
     }
 
-    void OnDrawGizmos()
-    {
-        Gizmos.DrawWireSphere(transform.position + m_center, 0.25f);
-    }
+    //void OnDrawGizmos()
+    //{
+    //    Gizmos.DrawWireSphere(transform.position + m_center, 0.25f);
+    //}
 
 }
