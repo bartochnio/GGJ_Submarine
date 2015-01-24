@@ -18,7 +18,7 @@ public class Part : MonoBehaviour {
 	int allBolts = 0;
 	int currentBalts = 0;
 
-
+    Plane castPlane;
 
 	IEnumerator GoStraight() {
 		while (transform.rotation != Quaternion.identity) {
@@ -34,7 +34,7 @@ public class Part : MonoBehaviour {
 	public void BoltScrewd () {
 		currentBalts++;
 		if (allBolts == currentBalts) {
-			rPoint.done = true;
+			rPoint.Done = true;
 		}
 	}
 
@@ -50,7 +50,25 @@ public class Part : MonoBehaviour {
 
 		StartCoroutine(GoStraight());
 
+        castPlane = new Plane(-Vector3.forward, Vector3.zero);
+
+
 	}
+
+    Vector3 GetPositionOnPlane()
+    {
+        Camera c = GameObject.FindGameObjectWithTag("AssemblyCam").camera;
+        if (c == null) c = Camera.main;
+
+        Ray r = c.ScreenPointToRay(Input.mousePosition);
+
+        float d = 0;
+
+        castPlane.Raycast(r, out d);
+
+        return r.GetPoint(d);
+        
+    }
 
 	void OnMouseDown() {
 
@@ -94,18 +112,23 @@ public class Part : MonoBehaviour {
 
 	}
 
+    
+    
+
+
 	void Update() {
 
-        if (state == PartState.FIXED)
-        {
-            EmergencyMgr.GlobalInstance.OnEmergencyFinished();
-            return;
-        }
+        //if (state == PartState.FIXED)
+        //{
+        //    EmergencyMgr.GlobalInstance.OnEmergencyFinished();
+        //    return;
+        //}
 
-        else if (state == PartState.DRAGED)
+        //else 
+            if (state == PartState.DRAGED)
         {
-            Vector3 point = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            point.z = -1;
+            Vector3 point = GetPositionOnPlane();
+            
             transform.position = point;
         }
         else if (state == PartState.READY)
@@ -113,8 +136,8 @@ public class Part : MonoBehaviour {
 
             if (Vector3.Distance(transform.position, rPoint.transform.position) > 0.25f)
             {
-                Vector3 point = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                point.z = -1;
+                Vector3 point = GetPositionOnPlane();
+               
                 transform.position = point;
                 rPoint = null;
                 state = PartState.DRAGED;
