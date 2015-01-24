@@ -18,12 +18,15 @@ public class Room : MonoBehaviour {
         set {
             switch (value)
             {
-                case RoomEmergency.NONE:
-                    gameObject.SetColor("Green");
-                    break;
-                default:
+                case RoomEmergency.FLOODING:
                     gameObject.SetColor("Red");
                     flood.StartFlood();
+                    break;
+                case RoomEmergency.BROKEN:
+                    gameObject.SetColor("Yellow");
+                    break;
+                default:
+                    gameObject.SetColor("Green");
                     break;
             }
             m_status = value; 
@@ -39,8 +42,8 @@ public class Room : MonoBehaviour {
     {
         NONE,
         FLOODING,
-        DESTRoYED,
-        BROKEN
+        BROKEN,
+        DESTRoYED
     }
 
     public bool isRepaired = false;

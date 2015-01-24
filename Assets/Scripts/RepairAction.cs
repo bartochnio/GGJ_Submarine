@@ -42,12 +42,13 @@ public class RepairAction : MonoBehaviour {
         {
             repairMan.Status = CrewMember.State.ACTIVE;
             //TODO: Dojebac obsluge stanu pokoju, dany stan = inna korutyna
-            if (repairedRoom.Status == Room.RoomEmergency.DESTRoYED)
+            if (repairedRoom.Status == Room.RoomEmergency.FLOODING)
             {
                 StartCoroutine(Pump());
             }
             else
             {
+                EmergencyMgr.GlobalInstance.StartRepair();
                 StartCoroutine(Repair());
             }
         }
@@ -82,9 +83,7 @@ public class RepairAction : MonoBehaviour {
     {
         while (true)
         {
-            currentR3p += Time.deltaTime;
-
-            if (currentR3p >= rep4irTiMe)
+            if (!EmergencyMgr.GlobalInstance.isWorking)
             {
                 Ship.GlobalInstance.RemoteCallRoomStateChange(Room.RoomEmergency.NONE, repairedRoom.id);
                 repairedRoom.isRepaired = false;

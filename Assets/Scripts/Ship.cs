@@ -20,7 +20,9 @@ public class Ship : MonoBehaviour {
             if (nonEmergencyRooms.Count > 0)
             {
                 Room r = nonEmergencyRooms[Random.Range(0, nonEmergencyRooms.Count - 1)];
-                RemoteCallRoomStateChange(Room.RoomEmergency.DESTRoYED, r.id);
+
+                Room.RoomEmergency emergency = (Room.RoomEmergency)Mathf.Clamp(Random.Range(1,3),1,2); //haxooor
+                RemoteCallRoomStateChange(emergency, r.id);
             }
 
             if (Input.GetKeyDown(KeyCode.F12)) yield break;

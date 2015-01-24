@@ -96,22 +96,30 @@ public class Part : MonoBehaviour {
 
 	void Update() {
 
-		if (state == PartState.FIXED) return;
+        if (state == PartState.FIXED)
+        {
+            EmergencyMgr.GlobalInstance.OnEmergencyFinished();
+            return;
+        }
 
-		else if (state == PartState.DRAGED) {
-			Vector3 point = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-			point.z = -1;
-			transform.position = point;
-		}else if (state == PartState.READY) {
+        else if (state == PartState.DRAGED)
+        {
+            Vector3 point = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            point.z = -1;
+            transform.position = point;
+        }
+        else if (state == PartState.READY)
+        {
 
-			if (Vector3.Distance(transform.position, rPoint.transform.position) > 0.25f) {
-			Vector3 point = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-			point.z = -1;
-			transform.position = point;
-			rPoint = null;
-			state = PartState.DRAGED;
-			}
-		}
+            if (Vector3.Distance(transform.position, rPoint.transform.position) > 0.25f)
+            {
+                Vector3 point = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                point.z = -1;
+                transform.position = point;
+                rPoint = null;
+                state = PartState.DRAGED;
+            }
+        }
 
 
 	}
