@@ -21,6 +21,7 @@ public class Bolt : MonoBehaviour {
 		if (_active && !Fixed) {
 			_fixed = true;
 			gameObject.SetColor("Red");
+			GetComponentInParent<Part>().BoltScrewd();
 		}
 	}
 

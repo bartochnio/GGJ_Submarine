@@ -4,7 +4,7 @@ using System.Collections;
 [RequireComponent(typeof(Rigidbody2D))]
 public class Part : MonoBehaviour {
 
-	public int idGroup = -1;
+	public int partID = -1;
 
 	bool used = false;
 
@@ -15,9 +15,14 @@ public class Part : MonoBehaviour {
 		FIXED
 	}
 
+	int allBolts = 0;
+	int currentBalts = 0;
+
+
+
 	IEnumerator GoStraight() {
 		while (transform.rotation != Quaternion.identity) {
-			transform.rotation =  Quaternion.RotateTowards(transform.rotation, Quaternion.identity, 360 * Time.deltaTime);
+			transform.rotation =  Quaternion.RotateTowards(transform.rotation, Quaternion.identity, 90f * Time.deltaTime);
 
 			yield return new WaitForEndOfFrame();
 
@@ -26,6 +31,13 @@ public class Part : MonoBehaviour {
 
 	PartState state = PartState.IDLE;
 
+	public void BoltScrewd () {
+		currentBalts++;
+		if (allBolts == currentBalts) {
+			rPoint.done = true;
+		}
+	}
+
 	// Use this for initialization
 	void Start () {
 
@@ -33,6 +45,8 @@ public class Part : MonoBehaviour {
 
 		rigidbody2D.isKinematic = true;
 		collider2D.isTrigger = true;
+
+		allBolts = GetComponentsInChildren<Bolt>().Length;
 
 		StartCoroutine(GoStraight());
 
@@ -53,7 +67,7 @@ public class Part : MonoBehaviour {
 			foreach( var b in GetComponentsInChildren<Bolt>()){
 				b.Activate();
 			}
-			Destroy(this);
+			//Destroy(this);
 			// enable bolts
 
 			break;
@@ -70,7 +84,7 @@ public class Part : MonoBehaviour {
 
 		if (p == null || state == PartState.FIXED) return;
 
-		else {
+		else if (p.partID == this.partID) {
 			transform.position = p.transform.position;
 			state = PartState.READY;
 			rPoint = p;
