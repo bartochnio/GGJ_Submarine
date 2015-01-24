@@ -42,7 +42,6 @@ public class NetworkManager : MonoBehaviour {
 
     private void StartServer()
     {
-        //MasterServer.ipAddress = "127.0.0.1";
         Network.InitializeServer(4, 25000, false);
         MasterServer.RegisterHost(typeName, gameName);
     }
@@ -50,8 +49,22 @@ public class NetworkManager : MonoBehaviour {
     void OnServerInitialized()
     {
         Debug.Log("Server initialized!");
+        PlayerController.GlobalInstance.CreateCrewMember();
+        Ship.GlobalInstance.Init();
     }
 
+    void OnConnectedToServer()
+    {
+        Debug.Log("Connected to the server!");
+        PlayerController.GlobalInstance.CreateCrewMember();
+    }
+
+    void OnPlayerDisconnected(NetworkPlayer player)
+    {
+        Debug.Log("Clean up after player " + player);
+        Network.RemoveRPCs(player);
+        Network.DestroyPlayerObjects(player);
+    }
 
     void Update()
     {

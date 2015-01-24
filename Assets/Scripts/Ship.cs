@@ -20,7 +20,7 @@ public class Ship : MonoBehaviour {
             if (nonEmergencyRooms.Count > 0)
             {
                 Room r = nonEmergencyRooms[Random.Range(0, nonEmergencyRooms.Count - 1)];
-                r.Status = Room.RoomEmergency.DESTRoYED;
+                RemoteCallRoomStateChange(Room.RoomEmergency.DESTRoYED, r.id);
             }
 
             if (Input.GetKeyDown(KeyCode.F12)) yield break;
@@ -29,14 +29,33 @@ public class Ship : MonoBehaviour {
         }
     }
 
+    public void RemoteCallRoomStateChange(Room.RoomEmergency state, int roomID)
+    {
+        networkView.RPC("RemoteChangeRoomState", RPCMode.AllBuffered, (int)state, roomID);
+    }
+
+    [RPC] void RemoteChangeRoomState(int status, int roomID)
+    {
+        Room room = m_rooms.Find(x => x.id == roomID);
+        room.Status = (Room.RoomEmergency)status;
+    }
+
+    public static Ship GlobalInstance
+    {
+        get { return FindObjectOfType<Ship>(); }
+    }
+
 	// Use this for initialization
 	void Start () {
         eventTimer = Random.Range(1.0f, 5.0f);
-
-        StartCoroutine(EmergencyPolling());
         m_rooms.AddRange(GetComponentsInChildren<Room>());
-
 	}
+
+    public void Init()
+    {
+        if (Network.isServer)
+            StartCoroutine(EmergencyPolling());
+    }
 	
 	// Update is called once per frame
 	void Update () 

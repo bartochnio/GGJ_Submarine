@@ -6,6 +6,9 @@ public class Room : MonoBehaviour {
 
 
     private RoomEmergency m_status;
+    static private int globalID = 0;
+
+    public int id;
 
     public RoomEmergency Status
     {
@@ -50,6 +53,8 @@ public class Room : MonoBehaviour {
 
 	void Start () 
     {
+        id = ++globalID;
+
         m_center = transform.position + m_center;
         Status = RoomEmergency.NONE;
 	}

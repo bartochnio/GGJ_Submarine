@@ -27,7 +27,7 @@ public class FirstPersonMotor : MonoBehaviour {
 
 	public void SetHorAxis(float a) {
 
-		a = Mathf.Clamp (a, -1, 1);
+		 a = Mathf.Clamp (a, -1, 1);
 		
 		currentHorAcc = a * maxVertAcc;
 	}

@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour {
     List<CrewMember> crew;
     CrewMember m_currentMember;
 
+    public GameObject crewMemberPrefab;
 
     public CrewMember SelectedCrewMember
     {
@@ -23,8 +24,15 @@ public class PlayerController : MonoBehaviour {
 	void Start () 
     {
         crew = new List<CrewMember>(FindObjectsOfType<CrewMember>());
-        m_currentMember = crew[0];
+        //m_currentMember = crew[0];
 	}
+
+    public void CreateCrewMember()
+    {
+        //To robi cale RPC szmery bajery za nas! Fajne nie?!
+        GameObject go = Network.Instantiate(crewMemberPrefab, Vector3.zero, Quaternion.identity, 0) as GameObject;
+        m_currentMember = go.GetComponent<CrewMember>();
+    }
 
     public void Repair(CrewMember m,  Room r)
     {
@@ -40,7 +48,6 @@ public class PlayerController : MonoBehaviour {
     {
         get { return SelectedCrewMember.Status == CrewMember.State.ACTIVE; }
     }
-
 
 	// Update is called once per frame
 	void Update () 

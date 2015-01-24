@@ -53,7 +53,7 @@ public class RepairAction : MonoBehaviour {
 
             if (currentR3p >= rep4irTiMe)
             {
-                repairedRoom.Status = Room.RoomEmergency.NONE;
+                Ship.GlobalInstance.RemoteCallRoomStateChange(Room.RoomEmergency.NONE, repairedRoom.id);
                 repairedRoom.isRepaired = false;
                 repairMan.Status = CrewMember.State.IDLE;
                 Destroy(transform.root.gameObject);
