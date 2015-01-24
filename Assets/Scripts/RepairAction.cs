@@ -41,7 +41,40 @@ public class RepairAction : MonoBehaviour {
         if (repairMan.currentRoom == repairedRoom)
         {
             repairMan.Status = CrewMember.State.ACTIVE;
-            StartCoroutine(Repair());
+            //TODO: Dojebac obsluge stanu pokoju, dany stan = inna korutyna
+            if (repairedRoom.Status == Room.RoomEmergency.DESTRoYED)
+            {
+                StartCoroutine(Pump());
+            }
+            else
+            {
+                StartCoroutine(Repair());
+            }
+        }
+    }
+
+    IEnumerator Pump()
+    {
+        while (true)
+        {
+            if (Input.GetButtonDown("Fire1"))
+            {
+                if (Network.isServer)
+                    repairedRoom.PumpWater();
+                else
+                    Ship.GlobalInstance.RemoteCallPumpWater(repairedRoom.id);
+            }
+
+            if (repairedRoom.IsRoomCleared())
+            {
+                Ship.GlobalInstance.RemoteCallRoomStateChange(Room.RoomEmergency.NONE, repairedRoom.id);
+                repairedRoom.isRepaired = false;
+                repairMan.Status = CrewMember.State.IDLE;
+                Destroy(transform.root.gameObject);
+                yield break;
+            }
+
+            yield return new WaitForEndOfFrame();
         }
     }
 

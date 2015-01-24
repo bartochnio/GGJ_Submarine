@@ -8,6 +8,8 @@ public class Room : MonoBehaviour {
     private RoomEmergency m_status;
     static private int globalID = 0;
 
+    private Flood flood;
+
     public int id;
 
     public RoomEmergency Status
@@ -21,6 +23,7 @@ public class Room : MonoBehaviour {
                     break;
                 default:
                     gameObject.SetColor("Red");
+                    flood.StartFlood();
                     break;
             }
             m_status = value; 
@@ -57,7 +60,19 @@ public class Room : MonoBehaviour {
 
         m_center = transform.position + m_center;
         Status = RoomEmergency.NONE;
+
+        flood = GetComponentInChildren<Flood>();
 	}
+
+    public bool IsRoomCleared()
+    {
+        return flood.IsCleared();
+    }
+
+    public void PumpWater()
+    {
+        flood.Pump();
+    }
 
     void OnTriggerEnter2D(Collider2D col)
     {

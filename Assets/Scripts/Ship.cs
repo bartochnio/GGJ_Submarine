@@ -29,6 +29,11 @@ public class Ship : MonoBehaviour {
         }
     }
 
+    public void RemoteCallPumpWater(int roomID)
+    {
+        networkView.RPC("RemotePumpWater", RPCMode.Server, roomID);
+    }
+
     public void RemoteCallRoomStateChange(Room.RoomEmergency state, int roomID)
     {
         networkView.RPC("RemoteChangeRoomState", RPCMode.AllBuffered, (int)state, roomID);
@@ -38,6 +43,13 @@ public class Ship : MonoBehaviour {
     void RemoteChangeRoomState(int status, int roomID) {
         Room room = m_rooms.Find(x => x.id == roomID);
         room.Status = (Room.RoomEmergency)status;
+    }
+
+    [RPC]
+    void RemotePumpWater(int roomID)
+    {
+        Room room = m_rooms.Find(x => x.id == roomID);
+        room.PumpWater();
     }
 
     public static Ship GlobalInstance
