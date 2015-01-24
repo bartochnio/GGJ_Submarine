@@ -22,20 +22,20 @@ public class FirstPersonMotor : MonoBehaviour {
 	public void SetVeAxis(float a){
 		a = Mathf.Clamp (a, -1, 1);
 
-		currentVertAcc = a * maxVertAcc;
+		currentVertAcc = a * (maxVertAcc + drag);
 	}
 
 	public void SetHorAxis(float a) {
 
 		 a = Mathf.Clamp (a, -1, 1);
 		
-		currentHorAcc = a * maxVertAcc;
+		currentHorAcc = a * (maxVertAcc + drag);
 	}
 
 	// Use this for initialization
 	void Start () 
 	{
-		
+
 	}
 	// Update is called once per frame
 	void Update () {

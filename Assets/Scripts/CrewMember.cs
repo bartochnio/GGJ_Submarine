@@ -70,7 +70,6 @@ public class CrewMember : MonoBehaviour {
 
       if (Vector3.Distance(transform.position, m_curWaypoint.m_center) < 0.0001f)
       {
-          // current room is not necessary 
 
           if (m_path.Count == 0)
           {
@@ -80,9 +79,7 @@ public class CrewMember : MonoBehaviour {
                   PlayerController.GlobalInstance.Repair(this, destination);
                   m_state = State.ACTIVE;
               }
-              //current = destination;
-              //current.m_containsPlayer = true;
-
+              
               m_state = State.IDLE;
           }
           else

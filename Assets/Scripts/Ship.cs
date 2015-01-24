@@ -34,8 +34,8 @@ public class Ship : MonoBehaviour {
         networkView.RPC("RemoteChangeRoomState", RPCMode.AllBuffered, (int)state, roomID);
     }
 
-    [RPC] void RemoteChangeRoomState(int status, int roomID)
-    {
+	[RPC]
+    void RemoteChangeRoomState(int status, int roomID) {
         Room room = m_rooms.Find(x => x.id == roomID);
         room.Status = (Room.RoomEmergency)status;
     }
@@ -47,7 +47,6 @@ public class Ship : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        eventTimer = Random.Range(1.0f, 5.0f);
         m_rooms.AddRange(GetComponentsInChildren<Room>());
 	}
 

@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour {
 
     public GameObject crewMemberPrefab;
 
+
     public CrewMember SelectedCrewMember
     {
         get { return m_currentMember; }
@@ -39,7 +40,7 @@ public class PlayerController : MonoBehaviour {
         if (r.Status != Room.RoomEmergency.NONE && !r.isRepaired)
         {
             r.isRepaired = true;
-            RepairAction.Create(r);
+            RepairAction.Create(r, 3f);
         }
     }
 	

@@ -18,7 +18,7 @@ public class RepairAction : MonoBehaviour {
 
     }
 
-    public static RepairAction Create(Room r, float reptime = 3f)
+    public static RepairAction Create(Room r, float reptime)
     {
         
 
