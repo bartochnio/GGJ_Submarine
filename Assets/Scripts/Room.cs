@@ -13,6 +13,7 @@ public class Room : MonoBehaviour {
 
     public int id;
     public float timerToFlood = 10.0f;
+    public CrewMember curPlayer;
 
     public RoomEmergency Status
     {
@@ -40,6 +41,25 @@ public class Room : MonoBehaviour {
 
     public List<Room> m_neighbours = new List<Room>();
 
+    public Door top;
+    public Door bottom;
+    public Door left;
+    public Door right;
+
+    public List<Room> GetOpenNeighbours()
+    {
+        List<Room> result = new List<Room>();
+
+        if (top != null && top.open)
+        {
+            Room r = top.GetOther(this);
+            if (r.IsRoomAvailable())
+                result.Add(r);
+        }
+
+        return result;
+    }
+
     public enum RoomEmergency
     {
         NONE,
@@ -57,6 +77,11 @@ public class Room : MonoBehaviour {
         PING,
         TURRET,
         EMPTY
+    }
+
+    bool IsRoomAvailable()
+    {
+        return m_status != RoomEmergency.DESTRoYED;
     }
 
 	void Start () 
@@ -90,8 +115,14 @@ public class Room : MonoBehaviour {
             if (mem.currentRoom != null)
                     mem.currentRoom.m_containsPlayer = false;
             mem.currentRoom = this;
+            curPlayer = mem;
             m_containsPlayer = true;
         }
+    }
+
+    void OnTriggerExit2D(Collider2D col)
+    {
+        curPlayer = null;
     }
 
     void Update () 

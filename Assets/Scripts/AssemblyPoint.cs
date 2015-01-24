@@ -7,7 +7,15 @@ public class AssemblyPoint : MonoBehaviour {
 	// Have to the same as the part to allow it to be fixed at this position
 	public int partID = -1;
 
-	public bool done = false;
+
+
+    private bool _done = false;
+
+    public bool Done
+    {
+        get { return _done; }
+        set { _done = value; }
+    }
 
 	void Start() {
 		collider2D.isTrigger = true;
