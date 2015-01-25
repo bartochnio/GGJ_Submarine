@@ -25,13 +25,18 @@ public class Flood : MonoBehaviour {
         Vector3 curScale = transform.localScale;
         curScale.y = height;
         transform.localScale = curScale;
-
+        renderer.enabled = false;
         m_state = State.IDLE;
 	}
 
     public bool IsCleared()
     {
         return m_state == State.IDLE;
+    }
+
+    public bool IsFull()
+    {
+        return height >= 0.8f;
     }
 
     public void Pump()
@@ -49,6 +54,7 @@ public class Flood : MonoBehaviour {
             curScale.y = height;
             transform.localScale = curScale;
             m_state = State.IDLE;
+            renderer.enabled = false;
 
             RemoteCallNotifyRoomCleared();
         }
@@ -67,6 +73,7 @@ public class Flood : MonoBehaviour {
 
     public void StartFlood()
     {
+        renderer.enabled = true;
         m_state = State.FLOODING;
     }
 
@@ -76,6 +83,7 @@ public class Flood : MonoBehaviour {
         Vector3 curScale = transform.localScale;
         curScale.y = height;
         transform.localScale = curScale;
+        renderer.enabled = false;
         m_state = State.IDLE;
     }
 

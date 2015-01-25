@@ -19,6 +19,8 @@ public class Room : MonoBehaviour {
     {
         get { return m_status; }
         set {
+            if (value == m_status)
+                return;
             switch (value)
             {
                 case RoomEmergency.FLOODING:
@@ -162,12 +164,30 @@ public class Room : MonoBehaviour {
                     }
                 }
                 break;
-
+            case RoomEmergency.FLOODING:
+                if(flood.IsFull())
+                {
+                    PropagateFloodToNeighbours();
+                    Ship.GlobalInstance.RemoteCallRoomStateChange(RoomEmergency.DESTRoYED, id);
+                }
+                break;
             default:
                 floodCounter = 0.0f;
                 break;
         }
 	}
+
+    void PropagateFloodToNeighbours()
+    {
+        if (!Network.isServer)
+            return;
+
+        List<Room> neighbours = GetOpenNeighbours();
+        foreach(Room r in neighbours)
+        {
+            Ship.GlobalInstance.RemoteCallRoomStateChange(RoomEmergency.FLOODING, r.id);
+        }
+    }
 
     void OnMouseDown()
     {
