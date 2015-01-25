@@ -153,13 +153,13 @@ public class Room : MonoBehaviour {
         switch(m_status)
         {
             case RoomEmergency.BROKEN:
-                floodCounter += Time.deltaTime;
-                if (floodCounter >= timerToFlood)
+                if (!m_containsPlayer && !EmergencyMgr.GlobalInstance.isWorking)
                 {
-                    if (!m_containsPlayer)
+                    floodCounter += Time.deltaTime;
+                    if (floodCounter >= timerToFlood)
+                    {
                         Ship.GlobalInstance.RemoteCallRoomStateChange(RoomEmergency.FLOODING, id);
-                    else
-                        floodCounter = 0.0f;
+                    }
                 }
                 break;
 

@@ -40,14 +40,15 @@ public class RepairAction : MonoBehaviour {
 
         if (repairMan.currentRoom == repairedRoom )
         {
-            repairMan.Status = CrewMember.State.ACTIVE;
             //TODO: Dojebac obsluge stanu pokoju, dany stan = inna korutyna
             if (repairedRoom.Status == Room.RoomEmergency.FLOODING)
             {
+                repairMan.Status = CrewMember.State.ACTIVE;
                 StartCoroutine(Pump());
             }
             else if (repairMan.Item == INVENTORY_ITEM.PATCH)
             {
+                repairMan.Status = CrewMember.State.ACTIVE;
                 repairMan.DropInventoryItem();
                 EmergencyMgr.GlobalInstance.StartRepair();
                 StartCoroutine(Repair());
