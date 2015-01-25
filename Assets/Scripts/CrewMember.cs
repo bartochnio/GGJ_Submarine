@@ -85,16 +85,16 @@ public class CrewMember : MonoBehaviour {
         
 	}
 
-    public void SetMoving(Room destination)
+    public void SetMoving(Room dest)
     {
-        if (destination != currentRoom)
+        if (dest != currentRoom && dest != destination)
         {
             m_path.Clear();
-            m_path = PathFinder.FindPath(currentRoom, destination);
+            m_path = PathFinder.FindPath(currentRoom, dest);
             if (m_path.Count > 0)
             {
                 m_state = State.MOVING;
-                this.destination = destination;
+                this.destination = dest;
 
                 m_curWaypoint = m_path.Pop();
             }
@@ -113,6 +113,11 @@ public class CrewMember : MonoBehaviour {
 	    if (m_state == State.MOVING)
         {
             Move();
+        }
+
+        if (currentRoom != null && currentRoom.Status != Room.RoomEmergency.NONE)
+        {
+            PlayerController.GlobalInstance.Repair(this, currentRoom);
         }
 	}
 
@@ -163,9 +168,9 @@ public class CrewMember : MonoBehaviour {
           if (m_path.Count == 0)
           {
               currentRoom.m_containsPlayer = false;
-              if (destination.Status != Room.RoomEmergency.NONE)
+              if (currentRoom.Status != Room.RoomEmergency.NONE)
               {
-                  PlayerController.GlobalInstance.Repair(this, destination);
+                  //PlayerController.GlobalInstance.Repair(this, destination);
                   m_state = State.ACTIVE;
               }
               
