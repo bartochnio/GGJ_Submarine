@@ -104,6 +104,12 @@ public class CrewMember : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
     {
+        if (!networkView.isMine)
+        {
+            syncTime += Time.deltaTime;
+            transform.position = Vector3.Lerp(syncStartPosition, syncEndPosition, syncTime / syncDelay);
+        }
+
 	    if (m_state == State.MOVING)
         {
             Move();
@@ -115,7 +121,37 @@ public class CrewMember : MonoBehaviour {
         //Debug.Log("Hit from crew");
     }
 
-    
+    private float lastSynchronizationTime = 0f;
+    private float syncDelay = 0f;
+    private float syncTime = 0f;
+    private Vector3 syncStartPosition = Vector3.zero;
+    private Vector3 syncEndPosition = Vector3.zero;
+
+    void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info)
+    {
+        Vector3 syncPosition = Vector3.zero;
+        int syncItem = (int)INVENTORY_ITEM.NONE;
+        if (stream.isWriting)
+        {
+            syncPosition = transform.position;
+            syncItem = (int)item;
+            stream.Serialize(ref syncPosition);
+            stream.Serialize(ref syncItem);
+        }
+        else
+        {
+            stream.Serialize(ref syncPosition);
+            stream.Serialize(ref syncItem);
+
+            syncTime = 0f;
+            syncDelay = Time.time - lastSynchronizationTime;
+            lastSynchronizationTime = Time.time;
+
+            syncStartPosition = transform.position;
+            syncEndPosition = syncPosition;
+            GetInventoryItem((INVENTORY_ITEM)syncItem);
+        }
+    }
 
     void Move()
     {
