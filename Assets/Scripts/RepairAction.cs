@@ -38,7 +38,7 @@ public class RepairAction : MonoBehaviour {
         if (isWorking) return;
             repairMan = PlayerController.GlobalInstance.SelectedCrewMember;
 
-        if (repairMan.currentRoom == repairedRoom)
+        if (repairMan.currentRoom == repairedRoom )
         {
             repairMan.Status = CrewMember.State.ACTIVE;
             //TODO: Dojebac obsluge stanu pokoju, dany stan = inna korutyna
@@ -46,8 +46,9 @@ public class RepairAction : MonoBehaviour {
             {
                 StartCoroutine(Pump());
             }
-            else
+            else if (repairMan.Item == INVENTORY_ITEM.PATCH)
             {
+                repairMan.DropInventoryItem();
                 EmergencyMgr.GlobalInstance.StartRepair();
                 StartCoroutine(Repair());
             }

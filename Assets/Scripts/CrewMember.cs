@@ -16,7 +16,7 @@ public class CrewMember : MonoBehaviour {
     }
 
     public Renderer wungielRender;
-    Renderer patchRendere;
+    public Renderer patchRendere;
 
     INVENTORY_ITEM item = INVENTORY_ITEM.NONE;
 
@@ -30,6 +30,7 @@ public class CrewMember : MonoBehaviour {
     {
         item = INVENTORY_ITEM.NONE;
         wungielRender.enabled = false;
+        patchRendere.enabled = false;
         //Visualisation
     }
     public void GetInventoryItem(INVENTORY_ITEM item)
@@ -39,10 +40,17 @@ public class CrewMember : MonoBehaviour {
         {
             case INVENTORY_ITEM.NONE:
                 wungielRender.enabled = false;
+                patchRendere.enabled = false;
                 break;
             case INVENTORY_ITEM.COAL:
                 wungielRender.enabled = true;
+                patchRendere.enabled = false;
                 break;
+            case INVENTORY_ITEM.PATCH:
+                patchRendere.enabled = true;
+                wungielRender.enabled = false;
+                break;
+
         }
         this.item = item;
     }
