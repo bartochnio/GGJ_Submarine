@@ -7,14 +7,14 @@ public class RepairAction : MonoBehaviour {
     public Room repairedRoom = null;
     public Canvas c;
     KeyCode repairKey;
-    float currentR3p = 0;
+  
     CrewMember repairMan = null;
 
 	// Use this for initialization
 	void Start () {
 
         int r = Random.Range(0, 20);
-        repairKey = (KeyCode)r;
+       
 
     }
 

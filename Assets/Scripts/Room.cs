@@ -101,11 +101,10 @@ public class Room : MonoBehaviour {
 
     public enum RoomType
     {
-        HELM,
-        ENGINE,
-        PING,
-        TURRET,
-        EMPTY
+        EMPTY,
+        WUNGIEL_AJNCLA,
+        WASSER_MOTOR,
+        MOTEK_AJNCLA
     }
 
 	void Start () 

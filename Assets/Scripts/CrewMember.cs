@@ -15,6 +15,50 @@ public class CrewMember : MonoBehaviour {
         ACTIVE
     }
 
+    public Renderer wungielRender;
+    Renderer patchRendere;
+
+    INVENTORY_ITEM item = INVENTORY_ITEM.NONE;
+
+    public INVENTORY_ITEM Item
+    {
+        get { return item; }
+        
+    }
+
+    public void DropInventoryItem()
+    {
+        item = INVENTORY_ITEM.NONE;
+        wungielRender.enabled = false;
+        //Visualisation
+    }
+    public void GetInventoryItem(INVENTORY_ITEM item)
+    {
+        DropInventoryItem();
+        switch (item)
+        {
+            case INVENTORY_ITEM.NONE:
+                wungielRender.enabled = false;
+                break;
+            case INVENTORY_ITEM.COAL:
+                wungielRender.enabled = true;
+                break;
+        }
+        this.item = item;
+    }
+    public bool UseInventoryItem(INVENTORY_ITEM item)
+    {
+        if (this.item == item)
+        {
+            DropInventoryItem();
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     State m_state;
 
     public State Status
@@ -30,6 +74,7 @@ public class CrewMember : MonoBehaviour {
 	void Start () 
     {
         m_state = State.IDLE;
+        
 	}
 
     public void SetMoving(Room destination)
