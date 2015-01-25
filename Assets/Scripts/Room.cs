@@ -26,9 +26,11 @@ public class Room : MonoBehaviour {
                 case RoomEmergency.FLOODING:
                     gameObject.SetColor("Red");
                     flood.StartFlood();
+
                     break;
                 case RoomEmergency.BROKEN:
                     gameObject.SetColor("Yellow");
+                    audio.PlayOneShot(audio.clip);
                     break;
                 default:
                     gameObject.SetColor("Green");

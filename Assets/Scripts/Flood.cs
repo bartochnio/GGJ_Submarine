@@ -6,6 +6,9 @@ public class Flood : MonoBehaviour {
     public float speed = 1.0f;
     float height = 0.0f;
 
+    AudioClip pumpingWater;
+    AudioClip waterFlowing;
+
     public float Height
     {
         get { return height; }
@@ -43,7 +46,7 @@ public class Flood : MonoBehaviour {
     {
         if (m_state == State.IDLE)
             return;
-
+        
         height -= 2.0f * Time.deltaTime;
         height = Mathf.Clamp01(height);
 
@@ -58,6 +61,8 @@ public class Flood : MonoBehaviour {
 
             RemoteCallNotifyRoomCleared();
         }
+
+        pumpedLastFrame = true;
     }
 
     public void RemoteCallNotifyRoomCleared()
@@ -73,12 +78,14 @@ public class Flood : MonoBehaviour {
 
     public void StartFlood()
     {
+        audio.Play();
         renderer.enabled = true;
         m_state = State.FLOODING;
     }
 
     public void ClearFlood()
     {
+        audio.Stop();
         height = 0.0f;
         Vector3 curScale = transform.localScale;
         curScale.y = height;
@@ -87,12 +94,17 @@ public class Flood : MonoBehaviour {
         m_state = State.IDLE;
     }
 
+    bool pumpedLastFrame = false;
+    bool pumping = false;
+
 	void Update () 
     {
         if (m_state == State.FLOODING)
         {
             Flooding();
         }
+
+        
 	}
 
     void Flooding()

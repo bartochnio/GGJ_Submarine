@@ -17,9 +17,12 @@ public class Door : MonoBehaviour {
             if (value)
             {
                 Debug.Log("OPEN!!!");
+                SoundMgr.GlobalInstance.PlaySoundOnce("open");
                 gameObject.SetColor("Yellow");
             }
-            else { Debug.Log("CLOSE!!!"); gameObject.SetColor("Red"); }
+            else { Debug.Log("CLOSE!!!");
+                SoundMgr.GlobalInstance.PlaySoundOnce("close");
+                gameObject.SetColor("Red"); }
 
 
             if (doorRenderer != null) doorRenderer.enabled = !value;
