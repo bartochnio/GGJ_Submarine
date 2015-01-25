@@ -31,7 +31,8 @@ public class PlayerController : MonoBehaviour {
     public void CreateCrewMember()
     {
         //To robi cale RPC szmery bajery za nas! Fajne nie?!
-        GameObject go = Network.Instantiate(crewMemberPrefab, Vector3.zero, Quaternion.identity, 0) as GameObject;
+        Vector3 pos = Ship.GlobalInstance.GetRandomRoomPos();
+        GameObject go = Network.Instantiate(crewMemberPrefab, pos, Quaternion.identity, 0) as GameObject;
         m_currentMember = go.GetComponent<CrewMember>();
     }
 

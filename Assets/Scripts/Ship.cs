@@ -91,6 +91,12 @@ public class Ship : MonoBehaviour {
 
 	}
 
+    public Vector3 GetRandomRoomPos()
+    {
+        Room r = m_rooms[Random.Range(0, m_rooms.Count - 1)];
+        return r.m_center;
+    }
+
     float UpdateFloodLevel()
     {
         float f = 0;
