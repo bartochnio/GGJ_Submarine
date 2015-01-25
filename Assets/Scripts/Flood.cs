@@ -5,6 +5,12 @@ public class Flood : MonoBehaviour {
 
     public float speed = 1.0f;
     float height = 0.0f;
+
+    public float Height
+    {
+        get { return height; }
+        set { height = value; }
+    }
     
     enum State
     {

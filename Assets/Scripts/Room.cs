@@ -8,7 +8,7 @@ public class Room : MonoBehaviour {
     private RoomEmergency m_status;
     static private int globalID = 0;
 
-    private Flood flood;
+    public Flood flood;
     private float floodCounter = 0.0f;
 
     public int id;
@@ -77,17 +77,17 @@ public class Room : MonoBehaviour {
         return result;
     }
 
-    void OnDrawGizmos()
-    {
-        Gizmos.color = Color.black;
-        if (bottom != null)Gizmos.DrawLine(transform.position, bottom.transform.position);
-        Gizmos.color = Color.red;
-        if (top != null) Gizmos.DrawLine(transform.position, top.transform.position);
-        Gizmos.color = Color.green;
-        if (left != null) Gizmos.DrawLine(transform.position, left.transform.position);
-        Gizmos.color = Color.cyan;
-        if (right != null) Gizmos.DrawLine(transform.position, right.transform.position);
-    }
+    //void OnDrawGizmos()
+    //{
+    //    Gizmos.color = Color.black;
+    //    if (bottom != null)Gizmos.DrawLine(transform.position, bottom.transform.position);
+    //    Gizmos.color = Color.red;
+    //    if (top != null) Gizmos.DrawLine(transform.position, top.transform.position);
+    //    Gizmos.color = Color.green;
+    //    if (left != null) Gizmos.DrawLine(transform.position, left.transform.position);
+    //    Gizmos.color = Color.cyan;
+    //    if (right != null) Gizmos.DrawLine(transform.position, right.transform.position);
+    //}
 
     public enum RoomEmergency
     {

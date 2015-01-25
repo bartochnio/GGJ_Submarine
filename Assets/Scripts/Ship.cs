@@ -11,6 +11,10 @@ public class Ship : MonoBehaviour {
     public float minTimeToEmergency = 2.5f;
     public float maxTimeToEmergency = 5f;
 
+    float maxFlood;
+    // Between 0 - 1;
+    public float gameOverRequirement = 0.5f;
+    
     IEnumerator EmergencyPolling()
     {
 
@@ -80,7 +84,26 @@ public class Ship : MonoBehaviour {
 	void Start () {
         m_rooms.AddRange(GetComponentsInChildren<Room>());
         m_doors.AddRange(GetComponentsInChildren<Door>());
+
+        gameOverRequirement = Mathf.Clamp(gameOverRequirement, 0, 1);
+
+        maxFlood = m_rooms.Count * gameOverRequirement;
+
 	}
+
+    float UpdateFloodLevel()
+    {
+        float f = 0;
+
+        foreach (var d in m_rooms)
+        {
+            f += d.flood.Height;
+        }
+
+        return f;
+    }
+
+
 
     public void Init()
     {
@@ -88,8 +111,28 @@ public class Ship : MonoBehaviour {
             StartCoroutine(EmergencyPolling());
     }
 	
+    [RPC]
+    void GameOver()
+    {
+        foreach (var o in FindObjectsOfType<GameObject>())
+        {
+            Destroy(o);
+        }
+    }
+
+
 	// Update is called once per frame
 	void Update () 
     {
+        if (Network.isServer)
+        {
+            if (UpdateFloodLevel() > maxFlood)
+            {
+                networkView.RPC("GameOver", RPCMode.AllBuffered);
+                //GameOver
+            }
+        }
+
+
 	}
 }
