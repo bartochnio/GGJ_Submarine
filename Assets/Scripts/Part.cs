@@ -22,7 +22,7 @@ public class Part : MonoBehaviour {
 
 	IEnumerator GoStraight() {
 		while (transform.rotation != Quaternion.identity) {
-			transform.rotation =  Quaternion.RotateTowards(transform.rotation, Quaternion.identity, 90f * Time.deltaTime);
+			transform.rotation =  Quaternion.RotateTowards(transform.rotation, Quaternion.AngleAxis( 180f, Vector3.up), 90f * Time.deltaTime);
 
 			yield return new WaitForEndOfFrame();
 

@@ -5,7 +5,7 @@ public class Door : MonoBehaviour {
 
     public Room room1;
     public Room room2;
-
+    public Renderer doorRenderer;
 
 
     private bool open;
@@ -20,6 +20,9 @@ public class Door : MonoBehaviour {
                 gameObject.SetColor("Yellow");
             }
             else { Debug.Log("CLOSE!!!"); gameObject.SetColor("Red"); }
+
+
+            if (doorRenderer != null) doorRenderer.enabled = !value;
             open = value; }
     }
     static private int globalID = 0;
@@ -28,9 +31,20 @@ public class Door : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         id = globalID++;
-        open = true;
+        Open = true;
+        renderer.enabled = false;
 	}
-	
+
+    void OnMouseOver()
+    {
+        renderer.enabled = true;
+    }
+    void OnMouseExit()
+    {
+
+        renderer.enabled = false;
+    }
+
 	// Update is called once per frame
 	void Update () {
 	}

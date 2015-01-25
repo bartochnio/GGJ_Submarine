@@ -18,7 +18,7 @@ public class WasserMotor : MonoBehaviour {
                 currentAmount = 0;
                 Debug.Log("END OF FUEL");
             }
-            Debug.Log("Fuel Left " + currentAmount);
+           // Debug.Log("Fuel Left " + currentAmount);
             yield return new WaitForEndOfFrame();
         }
     }

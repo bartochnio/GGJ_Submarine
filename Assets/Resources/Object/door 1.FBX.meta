@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 7af45254ab9dd244ca451c35fc4b4c8d
+guid: 647f0e67fc8a7dc47bad4fd9cbca2224
 ModelImporter:
   serializedVersion: 16
   fileIDToRecycleName:
@@ -7,7 +7,7 @@ ModelImporter:
     400000: //RootNode
     2300000: //RootNode
     3300000: //RootNode
-    4300000: plate
+    4300000: door
     9500000: //RootNode
   materials:
     importMaterials: 1

@@ -23,7 +23,7 @@ public class PickUpAction : MonoBehaviour {
 
     void OnMouseDown()
     {
-        //Debug.Log("Click");
+        Debug.Log("Click");
         PickUp();
     }
 

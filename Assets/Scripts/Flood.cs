@@ -107,7 +107,7 @@ public class Flood : MonoBehaviour {
         Vector3 curPos = transform.localPosition;
 
         curScale.y = height;
-        curPos.y = (height) * 0.5f - 0.5f;
+        curPos.y = (height) * 0.5f - 0.57f;
         transform.localScale = curScale;
         transform.localPosition = curPos;
     }

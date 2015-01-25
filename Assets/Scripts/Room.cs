@@ -155,7 +155,7 @@ public class Room : MonoBehaviour {
         switch(m_status)
         {
             case RoomEmergency.BROKEN:
-                if (!(m_containsPlayer && EmergencyMgr.GlobalInstance.isWorking))
+                if (!(curPlayer && EmergencyMgr.GlobalInstance.isWorking))
                 {
                     floodCounter += Time.deltaTime;
                     if (floodCounter >= timerToFlood)
